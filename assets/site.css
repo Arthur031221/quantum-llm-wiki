@@ -44,10 +44,10 @@ a { color: var(--accent); }
 .card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.08); }
 .card h2 { margin: 0 0 6px; font-size: 1.2rem; }
 .card p { margin: 0; color: var(--muted); font-size: .95rem; }
-.pipeline { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: .9rem; margin: 8px 0 24px; }
-.pipeline span { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 2px 10px; }
-.pipeline span.check { border-color: var(--accent); color: var(--accent); }
-.pipeline i { color: var(--muted); font-style: normal; }
+.pipeline { display: flex; flex-wrap: wrap; gap: 8px; font-size: .9rem; margin: 8px 0 12px; padding: 0; list-style: none; counter-reset: step; }
+.pipeline li { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 2px 10px; counter-increment: step; }
+.pipeline li::before { content: counter(step); color: var(--muted); margin-right: 6px; font-size: .8rem; }
+.pipeline li.check { border-color: var(--accent); color: var(--accent); }
 
 /* Wiki 與文件頁 */
 .layout { display: grid; grid-template-columns: 260px 1fr; gap: 32px; padding-top: 24px; }

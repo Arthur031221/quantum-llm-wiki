@@ -15,7 +15,7 @@ TEMPLATE = """<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>量子電腦是什麼？｜教學簡報</title>
-<meta name="description" content="給初學者的量子計算入門簡報，內容全部來自量子計算 LLM Wiki。">
+<meta name="description" content="給初學者的量子計算入門簡報，內容全部來自量子計算LLM Wiki。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
@@ -56,7 +56,7 @@ def build():
         parts.append(
             f'<section class="slide layout-{s["layout"]}" data-n="{i}">\n'
             f'<div class="slide-body">\n{md_to_html(s["body"])}\n</div>\n'
-            f'<footer class="slide-sources">Wiki 來源：{"、".join(links)}</footer>\n'
+            f'<footer class="slide-sources">內容出自wiki的{"、".join(links)}頁面</footer>\n'
             f"</section>"
         )
     (ROOT / "slides.html").write_text(TEMPLATE.replace("__SLIDES__", "\n".join(parts)), encoding="utf-8")

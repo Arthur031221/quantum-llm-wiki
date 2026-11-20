@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>量子計算 LLM Wiki</title>
-<meta name="description" content="用 LLM Wiki 整理量子計算入門知識，再從 wiki 產生給初學者的教學 HTML 簡報。">
+<title>量子計算LLM Wiki</title>
+<meta name="description" content="用LLM Wiki整理量子計算入門知識，再從wiki產生給初學者的教學HTML簡報。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
@@ -12,7 +12,7 @@
 <body>
 <header class="site-header">
   <div class="container">
-    <a class="logo" href="index.html">量子計算 LLM Wiki</a>
+    <a class="logo" href="index.html">量子計算LLM Wiki</a>
     <nav>
       <a href="slides.html">教學簡報</a>
       <a href="wiki.html">Wiki</a>
@@ -24,43 +24,33 @@
 
 <main class="container">
   <div class="hero">
-    <h1>量子計算 LLM Wiki</h1>
-    <p>先把 6 篇英文維基百科條目整理成一份由 LLM 維護的知識庫，再只用這份知識庫做出「量子電腦是什麼？」教學簡報。簡報的每一張都標了 wiki 來源，wiki 的每一頁都能追回原文。</p>
-  </div>
-
-  <div class="stats">
-    <div class="stat"><b>6</b>篇來源</div>
-    <div class="stat"><b>6</b>份討論紀錄</div>
-    <div class="stat"><b>8</b>個 wiki 頁面</div>
-    <div class="stat"><b>17</b>張投影片</div>
-    <div class="stat"><b>9</b>次執行紀錄</div>
+    <h1>量子計算LLM Wiki</h1>
+    <p>我把6篇英文維基百科條目整理成一份由LLM維護的知識庫，再只用這份知識庫做出「量子電腦是什麼？」這份教學簡報，簡報每一張都標了出自哪幾頁wiki，wiki每一頁也都能追回原文。</p>
   </div>
 
   <div class="cards">
     <a class="card" href="slides.html">
       <h2>教學簡報</h2>
-      <p>給沒學過量子力學的人：量子位元、疊加、測量、糾纏、量子閘、Shor 演算法、退相干，最後有小測驗。用方向鍵換頁。</p>
+      <p>寫給沒學過量子力學的人，從量子位元、疊加、測量和糾纏講到量子閘、Shor演算法和退相干，最後有小測驗，用方向鍵換頁。</p>
     </a>
     <a class="card" href="wiki.html">
       <h2>LLM Wiki</h2>
-      <p>8 個概念頁。每頁列出原始來源、討論紀錄，以及哪幾張投影片用到這一頁。</p>
+      <p>每個概念一頁，頁面上會列出原始來源和討論紀錄，也看得到哪幾張投影片用到這一頁。</p>
     </a>
     <a class="card" href="workflow.html">
       <h2>流程與反思</h2>
-      <p>loop / graph 從 v1 改到 v3 的過程、9 次實際執行的結果、最常出錯的節點與檢查怎麼往前移。</p>
+      <p>loop和graph怎麼從v1改到v3，每次實際執行抓到了什麼，哪個節點最常出錯，檢查又怎麼往前移。</p>
     </a>
   </div>
 
-  <h2 style="font-size:1.1rem">流程（graph v3）</h2>
-  <div class="pipeline">
-    <span class="check">test_checks</span><i>→</i><span>fetch</span><i>→</i><span>discuss</span><i>→</i>
-    <span>ingest</span><i>→</i><span class="check">lint_wiki</span><i>→</i><span class="check">review_claims</span><i>→</i>
-    <span>plan_outline</span><i>→</i><span class="check">check_outline</span><i>→</i><span>build_slides</span><i>→</i>
-    <span class="check">check_build</span>
-  </div>
-  <p style="color:var(--muted);font-size:.9rem">紫色框是檢查節點，任何一個失敗都會回到前面的生成節點重做。</p>
+  <h2 style="font-size:1.1rem">流程graph v3</h2>
+  <ol class="pipeline">
+    <li class="check">test_checks</li><li>fetch</li><li>discuss</li><li>ingest</li><li class="check">lint_wiki</li>
+    <li class="check">review_claims</li><li>plan_outline</li><li class="check">check_outline</li><li>build_slides</li><li class="check">check_build</li>
+  </ol>
+  <p style="color:var(--muted);font-size:.9rem">照編號依序執行，紫色框是檢查節點，任何一個沒過都會回到前面的生成節點重做。</p>
 </main>
 
-<footer class="site-footer">生成式 AI 第十週作業・內容整理自英文維基百科（CC BY-SA 4.0）</footer>
+<footer class="site-footer">生成式AI第十週作業，內容整理自英文維基百科，授權為CC BY-SA 4.0</footer>
 </body>
 </html>

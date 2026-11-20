@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>量子計算 LLM Wiki</title>
-<meta name="description" content="由 LLM 維護的量子計算入門知識庫，每頁都整理自維基百科來源。">
+<title>量子計算LLM Wiki</title>
+<meta name="description" content="由LLM維護的量子計算入門知識庫，每頁都整理自維基百科的條目。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
@@ -17,7 +17,7 @@
 <body>
 <header class="site-header">
   <div class="container">
-    <a class="logo" href="index.html">量子計算 LLM Wiki</a>
+    <a class="logo" href="index.html">量子計算LLM Wiki</a>
     <nav>
       <a href="slides.html">教學簡報</a>
       <a href="wiki.html" class="active">Wiki</a>
@@ -31,16 +31,16 @@
     <div id="toc"></div>
     <div class="extra">
       <ul>
-        <li><a href="#log">wiki/log.md（時間紀錄）</a></li>
+        <li><a href="#log">時間紀錄log.md</a></li>
         <li><a href="https://github.com/Arthur031221/quantum-llm-wiki/tree/main/discussions" target="_blank">討論紀錄</a></li>
-        <li><a href="https://github.com/Arthur031221/quantum-llm-wiki/tree/main/raw" target="_blank">原始來源 raw/</a></li>
+        <li><a href="https://github.com/Arthur031221/quantum-llm-wiki/tree/main/raw" target="_blank">原始來源raw</a></li>
       </ul>
     </div>
   </aside>
   <article class="doc" id="doc"></article>
 </main>
 
-<footer class="site-footer">內容整理自英文維基百科（CC BY-SA 4.0）・依 CLAUDE.md 規則由 LLM 維護</footer>
+<footer class="site-footer">內容整理自英文維基百科，授權為CC BY-SA 4.0，由LLM依照CLAUDE.md的規則維護</footer>
 
 <script>
 (async function () {
@@ -65,12 +65,12 @@
     if (meta.sources) {
       const srcs = [].concat(meta.sources).map((id) => {
         const m = manifest[id] || {};
-        return `<li><a href="${m.url || "#"}" target="_blank">${m.title || id}</a>（維基百科）・<a href="${REPO}raw/${id}.md" target="_blank">raw 檔</a>・<a href="${REPO}discussions/${id}.md" target="_blank">討論紀錄</a></li>`;
+        return `<li><a href="${m.url || "#"}" target="_blank">${m.title || id}</a>，維基百科條目，另有<a href="${REPO}raw/${id}.md" target="_blank">raw檔</a>和<a href="${REPO}discussions/${id}.md" target="_blank">討論紀錄</a></li>`;
       }).join("");
       const used = (slideMap[slug] || []).map((s) =>
-        `<li><a href="slides.html#${s.n}">第 ${s.n} 張：${s.title}</a></li>`).join("");
+        `<li><a href="slides.html#${s.n}">第${s.n}張，${s.title}</a></li>`).join("");
       box = `<div class="meta-box"><h4>這頁的來源</h4><ul>${srcs}</ul>` +
-        `<h4>用到這頁的投影片</h4><ul>${used || "<li>（目前沒有）</li>"}</ul></div>`;
+        `<h4>用到這頁的投影片</h4><ul>${used || "<li>目前還沒有</li>"}</ul></div>`;
     }
     const summary = meta.summary ? `<p class="summary">${meta.summary}</p>` : "";
     const html = renderMarkdown(body);
@@ -81,7 +81,7 @@
     fixLinks(doc, "wiki/");
     renderMath(doc);
     toc.querySelectorAll("a").forEach((a) => a.classList.toggle("active", a.getAttribute("href") === `wiki.html#${slug}`));
-    document.title = `${meta.title || slug}｜量子計算 LLM Wiki`;
+    document.title = `${meta.title || slug}｜量子計算LLM Wiki`;
     window.scrollTo(0, 0);
   }
   toc.addEventListener("click", (e) => {
