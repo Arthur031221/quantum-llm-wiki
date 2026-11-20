@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>量子電腦是什麼？｜教學簡報</title>
+<meta name="description" content="給初學者的量子計算入門簡報，內容全部來自量子計算 LLM Wiki。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+<link rel="stylesheet" href="assets/slides.css">
+</head>
+<body>
+<!-- 這個檔案由 scripts/build_slides.py 產生，請改 slides/outline.md 再重新建置 -->
+<div id="deck">
+<section class="slide layout-title" data-n="1">
+<div class="slide-body">
+<h1>量子電腦是什麼？</h1>
+<p>給完全沒學過量子力學的人的入門簡報</p>
+<p class="subtitle">內容全部來自本專案的量子計算 LLM Wiki・每張投影片右下角都標了 wiki 來源</p>
+</div>
+<footer class="slide-sources">Wiki 來源：<a href="wiki.html#quantum-computer">量子電腦</a></footer>
+</section>
+<section class="slide layout-content" data-n="2">
+<div class="slide-body">
+<h2>今天的學習目標</h2>
+<p>看完這份簡報，你應該能夠：</p>
+<ol><li>說出量子位元和一般位元差在哪裡</li><li>用自己的話解釋疊加、測量、糾纏</li><li>看懂一個兩步驟的量子電路</li><li>說明 Shor 演算法為什麼讓密碼學家緊張</li><li>知道量子電腦現在卡在哪裡</li></ol>
+</div>
+<footer class="slide-sources">Wiki 來源：<a href="wiki.html#quantum-computer">量子電腦</a></footer>
+</section>
+<section class="slide layout-content" data-n="3">
+<div class="slide-body">
+<h2>從位元說起</h2>
+<div class="cols">
+<div class="card">
+<h3>古典位元</h3>
+<ul><li>只能是 0 或 1</li><li>讀取時不會改變它</li><li>電晶體的電壓高低就是一個位元</li></ul>
+</div>
+<div class="card accent">
+<h3>量子位元（qubit）</h3>
+<ul><li>可以處在 0 和 1 的疊加</li><li>一測量就會被改變</li><li>電子自旋、光子偏振都能當量子位元</li></ul>
+</div>
+</div>
+<p>量子電腦用量子態表示和處理資訊，基本單位就是量子位元。</p>
+</div>
+<footer class="slide-sources">Wiki 來源：<a href="wiki.html#quantum-computer">量子電腦</a>、<a href="wiki.html#qubit">量子位元</a></footer>
+</section>
+<section class="slide layout-content" data-n="4">
+<div class="slide-body">
+<h2>疊加：兩個振幅</h2>
+<p>一個量子位元的狀態寫成</p>
+<div class="math">$$|\psi\rangle = \alpha|0\rangle + \beta|1\rangle, \qquad |\alpha|^2 + |\beta|^2 = 1$$</div>
+<ul><li>$\alpha$、$\beta$ 叫機率振幅，可以是負數，也可以是複數</li><li>兩個都不是 0，量子位元就處在疊加</li><li>通俗說法是「同時是 0 也是 1」，正式的意思是兩個振幅都不為零</li><li>古典位元就是 $\alpha$ 或 $\beta$ 其中一個等於 0 的特例</li></ul>
+</div>
+<footer class="slide-sources">Wiki 來源：<a href="wiki.html#qubit">量子位元</a>、<a href="wiki.html#superposition-and-measurement">疊加與測量</a></footer>
+</section>
+<section class="slide layout-content" data-n="5">
+<div class="slide-body">
+<h2>測量：機率是振幅的平方</h2>
+<p>測量 $\alpha|0\rangle + \beta|1\rangle$ 時（Born 規則）：</p>
+<ul><li>得到 0 的機率是 $|\alpha|^2$，之後狀態變成 $|0\rangle$</li><li>得到 1 的機率是 $|\beta|^2$，之後狀態變成 $|1\rangle$</li><li>測量後原本的疊加就沒了，所以測量不可逆</li></ul>
+<div class="example">例子：測量 $\tfrac{1}{\sqrt2}|0\rangle + \tfrac{1}{\sqrt2}|1\rangle$，$|\tfrac{1}{\sqrt2}|^2 = \tfrac12$，得到 0 和 1 的機率各一半。</div>
+</div>
+<footer class="slide-sources">Wiki 來源：<a href="wiki.html#superposition-and-measurement">疊加與測量</a></footer>
+</section>
+<section class="slide layout-content" data-n="6">
+<div class="slide-body">
+<h2>振幅可以互相抵消：干涉</h2>
+<ul><li>機率一定是正的，振幅可以是負的</li><li>正負振幅相加會抵消，這叫破壞性干涉</li><li>$|+\rangle$ 和 $|-\rangle$ 直接測量看起來一樣，都是一半一半，只差一個正負號；經過 Hadamard 閘後會得到不同結果</li><li>量子演算法的做法：安排操作，讓錯誤答案的振幅互相抵消，正確答案的振幅變大</li></ul>
+</div>
+<footer class="slide-sources">Wiki 來源：<a href="wiki.html#superposition-and-measurement">疊加與測量</a>、<a href="wiki.html#quantum-algorithms">量子演算法與加速</a></footer>
+</section>
+<section class="slide layout-content" data-n="7">
+<div class="slide-body">
+<h2>多個量子位元：每多一個，維度加倍</h2>
+<table><thead><tr><th>量子位元數</th><th>需要記錄的振幅數</th></tr></thead><tbody><tr><td>1</td><td>2</td></tr><tr><td>2</td><td>4（$\lvert 00\rangle, \lvert 01\rangle, \lvert 10\rangle, \lvert 11\rangle$）</td></tr><tr><td>n</td><td>$2^n$</td></tr><tr><td>100</td><td>$2^{100}$</td></tr></tbody></table>
+<p>用古典電腦記下 100 個量子位元的狀態，要存 $2^{100}$ 個數。這就是古典電腦很難模擬量子電腦的原因。</p>
+</div>
+<footer class="slide-sources">Wiki 來源：<a href="wiki.html#qubit">量子位元</a>、<a href="wiki.html#quantum-computer">量子電腦</a></footer>
+</section>
+<section class="slide layout-content" data-n="8">
+<div class="slide-body">
+<h2>量子糾纏</h2>
+<p>兩個量子位元的 Bell 態：</p>
+<div class="math">$$|\Phi^+\rangle = \frac{1}{\sqrt2}\left(|00\rangle + |11\rangle\right)$$</div>
+<ul><li>測量時一半機率得到 00、一半得到 11，不會出現 01 或 10</li><li>Alice 和 Bob 各拿一個，分開再遠，兩人的結果也一定相同</li><li>但 Alice 控制不了自己測到什麼，所以糾纏不能拿來超光速傳訊</li><li>1964 年 Bell 提出可檢驗的不等式，實驗結果違反它；2022 年諾貝爾物理獎頒給相關實驗</li></ul>
+</div>
+<footer class="slide-sources">Wiki 來源：<a href="wiki.html#entanglement">量子糾纏</a></footer>
+</section>
+<section class="slide layout-content" data-n="9">
+<div class="slide-body">
+<h2>量子邏輯閘：作用在量子位元上的矩陣</h2>
+<div class="cols">
+<div class="card">
+<h3>X 閘（量子 NOT）</h3>
+<div class="math">$$X = \begin{bmatrix} 0 &amp; 1 \\ 1 &amp; 0 \end{bmatrix}$$</div>
+<p>把 $|0\rangle$ 和 $|1\rangle$ 互換</p>
+</div>
+<div class="card">
+<h3>Hadamard 閘（H）</h3>
+<div class="math">$$H = \frac{1}{\sqrt2}\begin{bmatrix} 1 &amp; 1 \\ 1 &amp; -1 \end{bmatrix}$$</div>
+<p>把 $|0\rangle$ 變成等量疊加 $|+\rangle$</p>
+</div>
+</div>
+<p>量子閘都是么正矩陣，一定可逆。測量不可逆，所以測量不算量子閘。</p>
+</div>
+<footer class="slide-sources">Wiki 來源：<a href="wiki.html#quantum-gates">量子邏輯閘</a></footer>
+</section>
+<section class="slide layout-content" data-n="10">
+<div class="slide-body">
+<h2>第一個量子電路：做出糾纏</h2>
+<div class="circuit">
+<div class="wire"><span class="q">q₀ = |0⟩</span><span class="gate">H</span><span class="ctrl">●</span><span class="end">─</span></div>
+<div class="wire"><span class="q">q₁ = |0⟩</span><span class="gap"></span><span class="tgt">⊕</span><span class="end">─</span></div>
+</div>
+<ol><li>開始：$|00\rangle$</li><li>對 q₀ 做 H：$\frac{1}{\sqrt2}(|00\rangle + |10\rangle)$</li><li>CNOT（q₀ 是 1 才翻轉 q₁）：$|10\rangle$ 變成 $|11\rangle$</li><li>結果：$\frac{1}{\sqrt2}(|00\rangle + |11\rangle)$，就是上一張的 Bell 態</li></ol>
+</div>
+<footer class="slide-sources">Wiki 來源：<a href="wiki.html#quantum-gates">量子邏輯閘</a>、<a href="wiki.html#entanglement">量子糾纏</a></footer>
+</section>
+<section class="slide layout-content" data-n="11">
+<div class="slide-body">
+<h2>量子電腦會同時試所有答案嗎？</h2>
+<ul><li>把輸入準備成疊加，輸出的確同時包含所有輸入的結果，這叫量子平行</li><li>可是最後一測量，只會拿到一個值</li><li>加速要靠干涉：放大正確答案、抵消錯誤答案</li><li>Grover 搜尋：n 個項目裡找一個，古典約 n 次，量子約 $\sqrt n$ 次</li><li>Shor 分解整數：比已知最好的古典演算法快很多</li></ul>
+</div>
+<footer class="slide-sources">Wiki 來源：<a href="wiki.html#quantum-algorithms">量子演算法與加速</a></footer>
+</section>
+<section class="slide layout-content" data-n="12">
+<div class="slide-body">
+<h2>Shor 演算法：為什麼密碼學家緊張</h2>
+<ul><li>RSA 加密靠的是「大整數很難分解」</li><li>1994 年 Peter Shor 提出量子演算法，能在多項式時間內分解整數</li><li>只要量子電腦夠大、雜訊夠小，就能破解 RSA 和 Diffie–Hellman</li><li>只有「找週期」這一步需要量子電腦，其他步驟用古典電腦</li><li>現在：2001 年 IBM 用 7 個量子位元把 15 分解成 3 × 5，之後也只分解過 21 這種小數字</li><li>對策：後量子密碼學（PQC），NIST 正在制定標準</li></ul>
+</div>
+<footer class="slide-sources">Wiki 來源：<a href="wiki.html#shor-algorithm">Shor 演算法</a></footer>
+</section>
+<section class="slide layout-content" data-n="13">
+<div class="slide-body">
+<h2>最大的難題：退相干</h2>
+<ul><li>量子位元跟環境互動，量子資訊就流到環境裡，疊加和糾纏跟著消失</li><li>每個操作都要在退相干之前做完，有些機器要冷卻到 20 mK</li><li>宇宙射線也可能在幾毫秒內破壞量子態</li><li>對策是量子錯誤更正：用很多實體量子位元保護一個邏輯量子位元，例如 Shor code 用 9 個</li><li>代價：分解 2,048 位元的整數，估計要 300 萬個實體量子位元、5 個月</li></ul>
+<p class="note">比喻：相干性沒有消失，就像摩擦把能量變成熱，它混進了環境裡。</p>
+</div>
+<footer class="slide-sources">Wiki 來源：<a href="wiki.html#decoherence-and-error-correction">退相干與錯誤更正</a></footer>
+</section>
+<section class="slide layout-content" data-n="14">
+<div class="slide-body">
+<h2>量子電腦現在到哪裡了？</h2>
+<ul><li>到 2023 年，所有實際應用上古典電腦仍然比較強</li><li>2019 年 Google 宣稱用 54 個量子位元達成量子霸權，說超級電腦要算 10,000 年；IBM 反駁說約 2.5 天就能算完</li><li>量子霸權實驗挑的問題不一定有用，比較像科學里程碑</li><li>現在是 NISQ（有雜訊的中等規模）時代，下一步是可以容錯的大型量子電腦</li><li>最有希望的應用：量子模擬（化學、材料）</li></ul>
+</div>
+<footer class="slide-sources">Wiki 來源：<a href="wiki.html#quantum-computer">量子電腦</a>、<a href="wiki.html#shor-algorithm">Shor 演算法</a></footer>
+</section>
+<section class="slide layout-content" data-n="15">
+<div class="slide-body">
+<h2>小測驗</h2>
+<details><summary>1. 一個量子位元是 $\tfrac{1}{\sqrt2}|0\rangle - \tfrac{1}{\sqrt2}|1\rangle$，測量得到 1 的機率是多少？</summary>機率是振幅的平方：$|-\tfrac{1}{\sqrt2}|^2 = \tfrac12$。負號不影響機率，但會影響干涉。</details>
+<details><summary>2. 3 個量子位元的狀態需要幾個振幅來描述？</summary>$2^3 = 8$ 個。每多一個量子位元，數量加倍。</details>
+<details><summary>3. Alice 和 Bob 共享 Bell 態，Alice 測到 0。Bob 會測到什麼？他們能用這個方法傳訊息嗎？</summary>Bob 一定測到 0。但 Alice 沒辦法決定自己測到 0 還是 1，Bob 單看自己的結果只是隨機的 0 和 1，所以不能傳訊息。</details>
+<details><summary>4. 為什麼測量不算量子邏輯閘？</summary>量子閘是么正矩陣，一定可逆；測量會讓狀態崩塌，原本的疊加資訊消失，不可逆。</details>
+</div>
+<footer class="slide-sources">Wiki 來源：<a href="wiki.html#qubit">量子位元</a>、<a href="wiki.html#superposition-and-measurement">疊加與測量</a>、<a href="wiki.html#entanglement">量子糾纏</a>、<a href="wiki.html#quantum-gates">量子邏輯閘</a></footer>
+</section>
+<section class="slide layout-content" data-n="16">
+<div class="slide-body">
+<h2>重點整理</h2>
+<ol><li>量子位元可以處在 $|0\rangle$、$|1\rangle$ 的疊加，n 個量子位元要 $2^n$ 個振幅描述</li><li>測量依 Born 規則隨機得到結果，機率是振幅的平方，測量後疊加消失</li><li>糾纏讓測量結果完全相關，但不能超光速傳訊</li><li>量子閘是可逆的矩陣；H 加 CNOT 就能做出糾纏</li><li>加速來自干涉；Shor 演算法威脅 RSA，但需要的量子位元遠超過現有機器</li><li>退相干是最大難題，錯誤更正有效但代價很高</li></ol>
+</div>
+<footer class="slide-sources">Wiki 來源：<a href="wiki.html#qubit">量子位元</a>、<a href="wiki.html#superposition-and-measurement">疊加與測量</a>、<a href="wiki.html#entanglement">量子糾纏</a>、<a href="wiki.html#quantum-gates">量子邏輯閘</a>、<a href="wiki.html#shor-algorithm">Shor 演算法</a>、<a href="wiki.html#decoherence-and-error-correction">退相干與錯誤更正</a></footer>
+</section>
+<section class="slide layout-content" data-n="17">
+<div class="slide-body">
+<h2>參考資料</h2>
+<p>這份簡報只使用下列 wiki 頁面，wiki 頁面整理自 6 篇英文維基百科條目（CC BY-SA 4.0）。</p>
+<ul><li><a href="wiki.html#quantum-computer">量子電腦</a>、<a href="wiki.html#qubit">量子位元</a>、<a href="wiki.html#superposition-and-measurement">疊加與測量</a>、<a href="wiki.html#entanglement">量子糾纏</a></li><li><a href="wiki.html#quantum-gates">量子邏輯閘</a>、<a href="wiki.html#quantum-algorithms">量子演算法與加速</a>、<a href="wiki.html#shor-algorithm">Shor 演算法</a>、<a href="wiki.html#decoherence-and-error-correction">退相干與錯誤更正</a></li><li>原始來源：Quantum computing、Qubit、Quantum entanglement、Quantum logic gate、Shor's algorithm、Quantum decoherence</li><li>流程與檢查紀錄：<a href="workflow.html">workflow.html</a></li></ul>
+</div>
+<footer class="slide-sources">Wiki 來源：<a href="wiki.html#quantum-computer">量子電腦</a>、<a href="wiki.html#qubit">量子位元</a>、<a href="wiki.html#superposition-and-measurement">疊加與測量</a>、<a href="wiki.html#entanglement">量子糾纏</a>、<a href="wiki.html#quantum-gates">量子邏輯閘</a>、<a href="wiki.html#quantum-algorithms">量子演算法與加速</a>、<a href="wiki.html#shor-algorithm">Shor 演算法</a>、<a href="wiki.html#decoherence-and-error-correction">退相干與錯誤更正</a></footer>
+</section>
+</div>
+<nav id="controls">
+  <a href="index.html" class="home">首頁</a>
+  <button id="prev" type="button" aria-label="上一張">‹</button>
+  <span id="counter"></span>
+  <button id="next" type="button" aria-label="下一張">›</button>
+</nav>
+<div id="progress"><div></div></div>
+<script src="assets/slides.js"></script>
+</body>
+</html>

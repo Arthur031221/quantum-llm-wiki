@@ -1,0 +1,44 @@
+{
+  "01-quantum-computing": {
+    "title": "Quantum computing",
+    "url": "https://en.wikipedia.org/wiki/Quantum_computing",
+    "revision": "1386685712 (2026-11-19T23:57:14Z)",
+    "fetched": "2026-11-20",
+    "license": "CC BY-SA 4.0 (Wikipedia contributors)"
+  },
+  "02-qubit": {
+    "title": "Qubit",
+    "url": "https://en.wikipedia.org/wiki/Qubit",
+    "revision": "1385056994 (2026-11-11T17:25:03Z)",
+    "fetched": "2026-11-20",
+    "license": "CC BY-SA 4.0 (Wikipedia contributors)"
+  },
+  "03-quantum-entanglement": {
+    "title": "Quantum entanglement",
+    "url": "https://en.wikipedia.org/wiki/Quantum_entanglement",
+    "revision": "1383454028 (2026-11-02T19:45:31Z)",
+    "fetched": "2026-11-20",
+    "license": "CC BY-SA 4.0 (Wikipedia contributors)"
+  },
+  "04-quantum-logic-gate": {
+    "title": "Quantum logic gate",
+    "url": "https://en.wikipedia.org/wiki/Quantum_logic_gate",
+    "revision": "1376542851 (2026-09-24T20:30:33Z)",
+    "fetched": "2026-11-20",
+    "license": "CC BY-SA 4.0 (Wikipedia contributors)"
+  },
+  "05-shors-algorithm": {
+    "title": "Shor's algorithm",
+    "url": "https://en.wikipedia.org/wiki/Shor%27s_algorithm",
+    "revision": "1384103273 (2026-11-06T16:24:40Z)",
+    "fetched": "2026-11-20",
+    "license": "CC BY-SA 4.0 (Wikipedia contributors)"
+  },
+  "06-quantum-decoherence": {
+    "title": "Quantum decoherence",
+    "url": "https://en.wikipedia.org/wiki/Quantum_decoherence",
+    "revision": "1384689551 (2026-11-09T16:18:45Z)",
+    "fetched": "2026-11-20",
+    "license": "CC BY-SA 4.0 (Wikipedia contributors)"
+  }
+}

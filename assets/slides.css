@@ -1,0 +1,119 @@
+:root {
+  --navy: #14213d;
+  --accent: #6d28d9;
+  --accent-soft: #ede9fe;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --bg: #f5f5f0;
+  --card: #ffffff;
+  --border: #e5e7eb;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: #0b1020; }
+body {
+  font-family: "Noto Sans TC", -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif;
+  color: var(--text);
+  overflow: hidden;
+}
+
+/* 1280×720 的舞台，由 slides.js 依視窗大小縮放 */
+#deck {
+  position: absolute; left: 50%; top: 50%;
+  width: 1280px; height: 720px;
+  transform-origin: center center;
+}
+.slide {
+  position: absolute; inset: 0;
+  background: var(--bg);
+  padding: 56px 80px 64px;
+  display: none;
+  flex-direction: column;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.slide.active { display: flex; }
+.slide-body { flex: 1; font-size: 26px; line-height: 1.6; overflow: hidden; }
+
+.slide h2 {
+  margin: 0 0 24px; font-size: 42px; color: var(--navy);
+  padding-bottom: 12px; border-bottom: 4px solid var(--accent);
+}
+.slide h3 { margin: 0 0 8px; font-size: 28px; color: var(--accent); }
+.slide p { margin: 0 0 16px; }
+.slide ul, .slide ol { margin: 0 0 16px; padding-left: 1.3em; }
+.slide li { margin-bottom: 10px; }
+.slide .math { margin: 8px 0 20px; font-size: 1.1em; }
+.slide code { background: var(--accent-soft); padding: 0 6px; border-radius: 4px; }
+.slide a { color: var(--accent); }
+
+.slide table { border-collapse: collapse; margin: 0 0 20px; font-size: 24px; }
+.slide th, .slide td { border: 1px solid var(--border); padding: 8px 20px; text-align: left; background: var(--card); }
+.slide th { background: var(--accent-soft); }
+
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-bottom: 20px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 28px; }
+.card.accent { border: 2px solid var(--accent); }
+.card ul { margin: 0; }
+.card .math { margin: 4px 0 8px; }
+.example, .note {
+  background: var(--card); border-left: 6px solid var(--accent);
+  padding: 12px 20px; border-radius: 8px; font-size: 24px;
+}
+.note { color: var(--muted); margin-top: 8px; }
+
+/* 封面 */
+.layout-title { background: var(--navy); color: #fff; justify-content: center; }
+.layout-title .slide-body { display: flex; flex-direction: column; justify-content: center; }
+.layout-title h1 { font-size: 72px; margin: 0 0 16px; }
+.layout-title p { font-size: 30px; color: #c7d2fe; }
+.layout-title .subtitle { font-size: 22px; color: #94a3b8; margin-top: 32px; }
+.layout-title .slide-sources, .layout-title .slide-sources a { color: #94a3b8; }
+
+/* 量子電路圖 */
+.circuit {
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+  padding: 16px 28px; margin-bottom: 20px; font-size: 26px; display: inline-block;
+}
+.wire { display: flex; align-items: center; height: 56px; position: relative; }
+.wire::before { content: ""; position: absolute; left: 130px; right: 0; top: 50%; border-top: 2px solid var(--text); }
+.wire span { position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: center; }
+.wire .q { width: 130px; background: var(--card); }
+.wire .gate {
+  width: 48px; height: 48px; margin: 0 40px; background: var(--accent); color: #fff;
+  border-radius: 6px; font-weight: 700;
+}
+.wire .gap { width: 48px; margin: 0 40px; }
+.wire .ctrl, .wire .tgt { width: 48px; font-size: 32px; background: var(--card); }
+.wire .end { width: 60px; visibility: hidden; }
+.wire .ctrl::after {
+  content: ""; position: absolute; left: 50%; top: 50%; height: 56px; border-left: 2px solid var(--text);
+}
+
+/* 小測驗 */
+details {
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 10px 18px; margin-bottom: 12px; font-size: 22px;
+}
+details summary { cursor: pointer; font-weight: 700; }
+details[open] { border-color: var(--accent); }
+details[open] summary { margin-bottom: 6px; }
+
+.slide-sources {
+  position: absolute; right: 32px; bottom: 18px; font-size: 16px; color: var(--muted);
+}
+.slide-sources a { color: var(--muted); }
+
+/* 控制列 */
+#controls {
+  position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 12px;
+  background: rgba(15, 23, 42, .85); color: #fff; padding: 6px 14px; border-radius: 999px;
+  font-size: 14px; z-index: 10;
+}
+#controls button {
+  background: none; border: none; color: #fff; font-size: 22px; cursor: pointer; padding: 0 8px;
+}
+#controls a.home { color: #c7d2fe; text-decoration: none; margin-right: 6px; }
+#progress { position: fixed; left: 0; right: 0; top: 0; height: 4px; z-index: 10; }
+#progress div { height: 100%; width: 0; background: var(--accent); transition: width .2s; }
